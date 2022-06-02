@@ -1,12 +1,30 @@
 defmodule MercurioWeb.Router do
   use MercurioWeb, :router
 
+  alias MercurioWeb.Plugs.UUIDChecker
+
   pipeline :api do
     plug :accepts, ["json"]
+    plug UUIDChecker
+  end
+
+  pipeline :auth do
+    plug Mercurio.Auth.Pipeline
+  end
+
+  scope "/api", MercurioWeb do
+    pipe_through [:api, :auth]
+
+    resources "/users", UsersController, except: [:new, :edit, :create]
   end
 
   scope "/api", MercurioWeb do
     pipe_through :api
+
+    get "/", WelcomeController, :index
+
+    post "/users", UsersController, :create
+    post "/users/signin", UsersController, :sign_in
   end
 
   # Enables LiveDashboard only for development

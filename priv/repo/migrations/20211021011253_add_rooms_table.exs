@@ -12,8 +12,6 @@ defmodule Mercurio.Repo.Migrations.AddOrganizationsRoomsTable do
       add :show_emoji_button, :boolean
       add :message_reactions, :boolean
       add :show_users_online, :boolean
-      add :users_online, :integer
-      add :profanity_id, references(:profanities, type: :binary_id)
       add :user_id, references(:users, type: :binary_id)
 
       timestamps()

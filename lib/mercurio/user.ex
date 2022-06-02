@@ -3,7 +3,7 @@ defmodule Mercurio.User do
   import Ecto.Changeset
 
   alias Ecto.Changeset
-  alias Mercurio.File
+  alias Mercurio.{Room}
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
@@ -18,7 +18,7 @@ defmodule Mercurio.User do
     field :name, :string
     field :role, Ecto.Enum, values: [:admin, :external]
 
-    belongs_to :avatar_id, Mercurio.File
+    many_to_many :room_connected_users, Room, join_through: "room_connected_users"
 
     timestamps()
   end
@@ -36,7 +36,7 @@ defmodule Mercurio.User do
   end
 
   defp put_password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, Bcrypt.Base.hashPassword(password, Bcrypt.Base.gen_salt(12, true)))
+    change(changeset, Pbkdf2.add_hash(password))
   end
 
   defp put_password_hash(changeset), do: changeset

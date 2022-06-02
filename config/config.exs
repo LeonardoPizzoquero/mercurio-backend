@@ -14,9 +14,18 @@ config :mercurio, Mercurio.Repo,
   migration_primary_key: [type: :binary_id],
   migration_foreign_key: [type: :binary_id]
 
+config :mercurio, MercurioWeb.Auth.Guardian,
+  issuer: "mercurio",
+  secret_key: "np91Hq8v6+eHWETq8KhYOc10QjCdWCmf7N5V1e/OJ+QY+l/t8B8N20x4xjcXLEwL"
+
+config :mercurio, MercurioWeb.Auth.Pipeline,
+  module: MercurioWeb.Auth.Guardian,
+  error_handler: MercurioWeb.Auth.ErrorHandler
+
 # Configures the endpoint
 config :mercurio, MercurioWeb.Endpoint,
   url: [host: "localhost"],
+  secret_key_base: "dFdujrx1D52Vzzxqnp9DAHf/uiUUdJhvdgOmc8DU6Ou1FwFA41Wk+xVn/AhufHpa",
   render_errors: [view: MercurioWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Mercurio.PubSub,
   live_view: [signing_salt: "0FF26Bkc"]
