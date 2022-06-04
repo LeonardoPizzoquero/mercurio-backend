@@ -7,7 +7,6 @@ defmodule Mercurio.Repo.Migrations.AddUsersTable do
       add :password_hash, :string
       add :name, :string
       add :role, :string
-      add :avatar_id, references(:files, type: :binary_id), allow_nil: true
 
       timestamps()
     end

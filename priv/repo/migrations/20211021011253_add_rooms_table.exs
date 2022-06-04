@@ -5,9 +5,6 @@ defmodule Mercurio.Repo.Migrations.AddOrganizationsRoomsTable do
     create table :rooms do
       add :name, :string
       add :status, :boolean
-      add :direct_messages, :boolean
-      add :pre_moderation, :boolean
-      add :allow_links, :boolean
       add :allow_gif, :boolean
       add :show_emoji_button, :boolean
       add :message_reactions, :boolean
@@ -16,5 +13,7 @@ defmodule Mercurio.Repo.Migrations.AddOrganizationsRoomsTable do
 
       timestamps()
     end
+
+    create index(:rooms, [:user_id])
   end
 end

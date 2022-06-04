@@ -1,17 +1,21 @@
-defmodule Mercurio.File do
+defmodule Mercurio.Avatar do
   use Ecto.Schema
   import Ecto.Changeset
+
+  alias Mercurio.{User}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
 
-  @required_params [:name, :path]
+  @required_params [:path, :name, :user_id]
 
-  @derive {Jason.Encoder, only: [:id, :name, :path]}
+  @derive {Jason.Encoder, only: [:id, :path, :name, :user_id]}
 
-  schema "files" do
-    field :name, :string
+  schema "rooms" do
     field :path, :string
+    field :name, :string
+
+    belongs_to :user, User
 
     timestamps()
   end

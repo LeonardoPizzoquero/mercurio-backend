@@ -8,5 +8,8 @@ defmodule Mercurio.Repo.Migrations.AddRoomConnectedUsersTable do
 
       timestamps()
     end
+
+    create index(:room_connected_users, [:room_id])
+    create index(:room_connected_users, [:user_id])
   end
 end

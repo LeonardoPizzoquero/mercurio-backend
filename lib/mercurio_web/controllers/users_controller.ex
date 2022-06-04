@@ -8,7 +8,7 @@ defmodule MercurioWeb.UsersController do
 
   def create(conn, params) do
     with {:ok, %User{} = user} <- Mercurio.create_user(params),
-         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user, %{}) do
       conn
       |> put_status(:created)
       |> render("create.json", token: token, user: user)
@@ -32,7 +32,15 @@ defmodule MercurioWeb.UsersController do
   end
 
   def sign_in(conn, params) do
-    with {:ok, token} <- Guardian.authenticate(params) do
+    with {:ok, token, user} <- Guardian.authenticate(params) do
+      conn
+      |> put_status(:ok)
+      |> render("sign_in.json", token: token, user: user)
+    end
+  end
+
+  def sign_in_admin(conn, %{"email" => email} = params) do
+    with {:ok, _user} <- Mercurio.verify_user_admin(email), {:ok, token} <- Guardian.authenticate(params) do
       conn
       |> put_status(:ok)
       |> render("sign_in.json", token: token)

@@ -3,25 +3,28 @@ defmodule Mercurio.User do
   import Ecto.Changeset
 
   alias Ecto.Changeset
-  alias Mercurio.{Room, File, Message}
+  alias Mercurio.{Room, Message, Avatar}
 
   @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
 
-  @required_params [:email, :password, :name]
+  @required_params [:email, :password, :name, :role]
 
-  @derive {Jason.Encoder, only: [:id, :email, :name]}
+  @roles [:admin, :user]
+
+  @derive {Jason.Encoder, only: [:id, :email, :name, :role]}
 
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true
+    field :avatar_url, :string, virtual: true
     field :password_hash, :string
     field :name, :string
-    field :role, Ecto.Enum, values: [:admin, :external]
+    field :role, Ecto.Enum, values: @roles
 
-    belongs_to :files, File, foreign_key: :avatar_id
     has_many :messages, Message
     has_many :rooms, Room
-    many_to_many :room_connected_users, Room, join_through: "room_connected_users"
+    has_one :avatar, Avatar
 
     timestamps()
   end
@@ -32,6 +35,7 @@ defmodule Mercurio.User do
     struct
     |> cast(params, @required_params)
     |> validate_required(@required_params)
+    |> validate_inclusion(:role, @roles)
     |> validate_length(:password, min: 6)
     |> validate_format(:email, ~r/@/)
     |> unique_constraint([:email])

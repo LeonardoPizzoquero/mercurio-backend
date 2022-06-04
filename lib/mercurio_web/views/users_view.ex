@@ -11,7 +11,7 @@ defmodule MercurioWeb.UsersView do
     }
   end
 
-  def render("sign_in.json", %{token: token}), do: %{token: token}
+  def render("sign_in.json", %{token: token, user: user}), do: %{token: token, user: user}
 
-  def render("user.json", %{user: %User{} = user}), do: %{user: user}
+  def render("user.json", %{user: %User{} = user}), do: user
 end

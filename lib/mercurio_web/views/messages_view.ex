@@ -3,7 +3,7 @@ defmodule MercurioWeb.MessagesView do
 
   alias Mercurio.Message
 
-  def render("create.json", %{message: %Message{} = message}), do: %{message: message}
+  def render("create.json", %{message: %Message{} = message}), do: message
 
-  def render("message.json", %{message: %Message{} = message}), do: %{message: message}
+  def render("message.json", %{message: %Message{} = message}), do: message
 end

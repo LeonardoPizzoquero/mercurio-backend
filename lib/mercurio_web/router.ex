@@ -16,7 +16,9 @@ defmodule MercurioWeb.Router do
     pipe_through [:api, :auth]
 
     resources "/users", UsersController, except: [:new, :edit, :create]
-    resources "/messages", MessagesController, except: [:new, :edit]
+
+    resources "/rooms", RoomsController, except: [:new, :edit]
+    put "/rooms/status/:id", RoomsController, :change_status
   end
 
   scope "/api", MercurioWeb do
@@ -26,6 +28,7 @@ defmodule MercurioWeb.Router do
 
     post "/users", UsersController, :create
     post "/users/signin", UsersController, :sign_in
+    post "/users/signin/admin", UsersController, :sign_in_admin
   end
 
   # Enables LiveDashboard only for development
