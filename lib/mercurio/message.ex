@@ -14,8 +14,8 @@ defmodule Mercurio.Message do
     field :fixed, :boolean, default: false
     field :type, :string
     field :active, :boolean, default: true
-    belongs_to :users, User
-    belongs_to :rooms, Room
+    belongs_to :users, User, foreign_key: :user_id
+    belongs_to :rooms, Room, foreign_key: :room_id
 
     timestamps()
   end

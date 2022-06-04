@@ -9,13 +9,14 @@ defmodule MercurioWeb.Router do
   end
 
   pipeline :auth do
-    plug Mercurio.Auth.Pipeline
+    plug MercurioWeb.Auth.Pipeline
   end
 
   scope "/api", MercurioWeb do
     pipe_through [:api, :auth]
 
     resources "/users", UsersController, except: [:new, :edit, :create]
+    resources "/messages", MessagesController, except: [:new, :edit]
   end
 
   scope "/api", MercurioWeb do

@@ -3,7 +3,7 @@ defmodule Mercurio.User do
   import Ecto.Changeset
 
   alias Ecto.Changeset
-  alias Mercurio.{Room}
+  alias Mercurio.{Room, File, Message}
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
@@ -18,6 +18,9 @@ defmodule Mercurio.User do
     field :name, :string
     field :role, Ecto.Enum, values: [:admin, :external]
 
+    belongs_to :files, File, foreign_key: :avatar_id
+    has_many :messages, Message
+    has_many :rooms, Room
     many_to_many :room_connected_users, Room, join_through: "room_connected_users"
 
     timestamps()

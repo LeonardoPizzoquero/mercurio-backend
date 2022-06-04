@@ -13,4 +13,5 @@ defmodule Mercurio.Error do
   end
 
   def build_user_not_found_error, do: build(:not_found, "User not found")
+  def build_message_not_found_error, do: build(:not_found, "Message not found")
 end

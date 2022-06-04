@@ -20,7 +20,7 @@ defmodule Mercurio.Room do
 
     many_to_many :room_connected_users, User, join_through: "room_connected_users"
 
-    belongs_to :user, User
+    belongs_to :user, User, foreign_key: :user_id
 
     timestamps()
   end
