@@ -1,6 +1,8 @@
 defmodule MercurioWeb.UsersController do
   use MercurioWeb, :controller
 
+  alias MercurioWeb.Auth.Guardian
+
   alias Mercurio.User
   alias MercurioWeb.{Auth.Guardian, FallbackController}
 
@@ -40,15 +42,17 @@ defmodule MercurioWeb.UsersController do
   end
 
   def sign_in_admin(conn, %{"email" => email} = params) do
-    with {:ok, _user} <- Mercurio.verify_user_admin(email), {:ok, token} <- Guardian.authenticate(params) do
+    with {:ok, _users} <- Mercurio.verify_user_admin(email), {:ok, token, user} <- Guardian.authenticate(params) do
       conn
       |> put_status(:ok)
-      |> render("sign_in.json", token: token)
+      |> render("sign_in.json", token: token, user: user)
     end
   end
 
   def update(conn, params) do
-    with {:ok, %User{} = user} <- Mercurio.update_user(params) do
+    current_claims = Guardian.Plug.current_claims(conn)
+
+    with {:ok, %User{} = user} <- Mercurio.update_user(Map.put(params, "id", Map.get(current_claims, "sub"))) do
       conn
       |> put_status(:ok)
       |> render("user.json", user: user)

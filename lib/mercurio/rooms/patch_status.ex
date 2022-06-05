@@ -1,8 +1,7 @@
-defmodule Mercurio.Rooms.Patch do
-  import Ecto.Changeset
+defmodule Mercurio.Rooms.PatchStatus do
   alias Mercurio.{Error, Repo, Room}
 
-  def call(%{"id" => id}) do
+  def call(id) do
     case Repo.get(Room, id) do
       nil -> {:error, Error.build_room_not_found_error()}
       room -> do_update(room)
@@ -11,12 +10,7 @@ defmodule Mercurio.Rooms.Patch do
 
   defp do_update(room) do
     room
-    |> do_update_status()
-    |> Room.changeset()
+    |> Room.changeset(%{status: !room.status})
     |> Repo.update()
-  end
-
-  defp do_update_status(room) do
-    change(room, %{status: !room.status})
   end
 end

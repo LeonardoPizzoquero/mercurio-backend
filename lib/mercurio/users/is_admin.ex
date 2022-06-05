@@ -6,7 +6,7 @@ defmodule Mercurio.Users.IsAdmin do
     query = from u in User, where: [email: ^email], where: [role: :admin]
 
     case Repo.all(query) do
-      nil -> {:error, Error.build_user_not_found_error()}
+      [] -> {:error, Error.build_user_not_found_admin_error()}
       user -> {:ok, user}
     end
   end

@@ -6,6 +6,14 @@ defmodule MercurioWeb.RoomsController do
 
   action_fallback FallbackController
 
+  def index(conn, _params) do
+    with {:ok, rooms} <- Mercurio.get_all_rooms() do
+      conn
+      |> put_status(:ok)
+      |> render("index.json", rooms: rooms)
+    end
+  end
+
   def create(conn, params) do
     with {:ok, %Room{} = room} <- Mercurio.create_room(params) do
       conn

@@ -11,8 +11,9 @@ defmodule Mercurio do
   alias Mercurio.Messages.Update, as: MessageUpdate
 
   alias Mercurio.Rooms.Create, as: RoomCreate
-  alias Mercurio.Rooms.Patch, as: RoomChangeStatus
+  alias Mercurio.Rooms.PatchStatus, as: RoomChangeStatus
   alias Mercurio.Rooms.Get, as: RoomGet
+  alias Mercurio.Rooms.GetAll, as: RoomGetAll
   alias Mercurio.Rooms.Update, as: RoomUpdate
 
   alias Mercurio.RoomConnectedUsers.Create, as: RoomConnectedUserCreate
@@ -31,6 +32,7 @@ defmodule Mercurio do
   defdelegate create_room(params), to: RoomCreate, as: :call
   defdelegate change_room_status(id), to: RoomChangeStatus, as: :call
   defdelegate get_room_by_id(id), to: RoomGet, as: :by_id
+  defdelegate get_all_rooms(), to: RoomGetAll, as: :call
   defdelegate update_room(params), to: RoomUpdate, as: :call
 
   defdelegate create_room_connection(params), to: RoomConnectedUserCreate, as: :call
