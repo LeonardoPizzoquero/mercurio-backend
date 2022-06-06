@@ -45,9 +45,6 @@ jobs:
     - name: Run tests
       run: mix test
 
-test: 
-  # A job to run your tests, linters, etc
-
 deploy:
   needs: build # Will only run if the test job succeeds
   if: github.ref == 'refs/heads/main' # Only run this job if it is on the main branch
