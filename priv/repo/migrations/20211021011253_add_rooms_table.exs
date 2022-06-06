@@ -2,7 +2,7 @@ defmodule Mercurio.Repo.Migrations.AddOrganizationsRoomsTable do
   use Ecto.Migration
 
   def change do
-    create table :rooms do
+    create table(:rooms) do
       add :name, :string
       add :status, :boolean
       add :allow_gif, :boolean

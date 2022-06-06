@@ -5,8 +5,8 @@ defmodule Mercurio.RoomConnectedUsers.Create do
     changeset = RoomConnectedUser.changeset(params)
 
     with {:ok, %RoomConnectedUser{}} <- RoomConnectedUser.build(changeset),
-         {:ok, %RoomConnectedUser{}} = roomConnectedUser <- Repo.insert(changeset) do
-      roomConnectedUser
+         {:ok, %RoomConnectedUser{}} = room_connected_user <- Repo.insert(changeset) do
+      room_connected_user
     else
       {:error, %Error{}} = error -> error
       {:error, result} -> {:error, Error.build(:bad_request, result)}

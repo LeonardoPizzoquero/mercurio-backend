@@ -42,7 +42,8 @@ defmodule MercurioWeb.UsersController do
   end
 
   def sign_in_admin(conn, %{"email" => email} = params) do
-    with {:ok, _users} <- Mercurio.verify_user_admin(email), {:ok, token, user} <- Guardian.authenticate(params) do
+    with {:ok, _users} <- Mercurio.verify_user_admin(email),
+         {:ok, token, user} <- Guardian.authenticate(params) do
       conn
       |> put_status(:ok)
       |> render("sign_in.json", token: token, user: user)
@@ -52,7 +53,8 @@ defmodule MercurioWeb.UsersController do
   def update(conn, params) do
     current_claims = Guardian.Plug.current_claims(conn)
 
-    with {:ok, %User{} = user} <- Mercurio.update_user(Map.put(params, "id", Map.get(current_claims, "sub"))) do
+    with {:ok, %User{} = user} <-
+           Mercurio.update_user(Map.put(params, "id", Map.get(current_claims, "sub"))) do
       conn
       |> put_status(:ok)
       |> render("user.json", user: user)

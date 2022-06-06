@@ -2,7 +2,7 @@ defmodule Mercurio.Repo.Migrations.AddMessagesTable do
   use Ecto.Migration
 
   def change do
-    create table :messages do
+    create table(:messages) do
       add :content, :string
       add :fixed, :boolean
       add :type, :string
