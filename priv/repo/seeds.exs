@@ -12,11 +12,11 @@
 
 alias Mercurio.{User, Repo}
 
-user = %User{
+user = %{
   email: "administrator@mercurio.com",
   name: "Administrator",
   password: "4012788f32a749e01d104951d92d0723",
   role: :admin
 }
 
-Repo.insert!(user)
+Mercurio.create_user(user)

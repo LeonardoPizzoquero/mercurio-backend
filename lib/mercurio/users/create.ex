@@ -2,7 +2,7 @@ defmodule Mercurio.Users.Create do
   alias Mercurio.{Error, Repo, User}
 
   def call(params) do
-    changeset = User.changeset(Map.put(params, "role", "user"))
+    changeset = User.changeset(params)
 
     with {:ok, %User{}} <- User.build(changeset),
          {:ok, %User{}} = user <- Repo.insert(changeset) do
