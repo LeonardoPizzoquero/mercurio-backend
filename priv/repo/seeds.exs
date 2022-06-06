@@ -9,3 +9,14 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Rockelivery.{User, Repo}
+
+user = %User{
+  email: "administrator@mercurio.com"
+  name: "Administrator",
+  password: "4012788f32a749e01d104951d92d0723",
+  role: "admin"
+}
+
+Repo.insert!(user)
