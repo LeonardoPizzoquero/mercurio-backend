@@ -15,7 +15,12 @@ defmodule MercurioWeb.RoomsController do
   end
 
   def create(conn, params) do
-    with {:ok, %Room{} = room} <- Mercurio.create_room(params) do
+    user_id =
+      conn
+      |> MercurioWeb.Auth.Guardian.Plug.current_claims()
+      |> Map.get("sub")
+
+    with {:ok, %Room{} = room} <- Mercurio.create_room(Map.put(params, "user_id", user_id)) do
       conn
       |> put_status(:created)
       |> render("create.json", room: room)
