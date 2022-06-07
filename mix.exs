@@ -49,7 +49,8 @@ defmodule Mercurio.MixProject do
       {:excoveralls, "~> 0.10", only: :test},
       {:ex_machina, "~> 2.7.0"},
       {:tesla, "~> 1.4"},
-      {:guardian, "~> 2.2"}
+      {:guardian, "~> 2.2"},
+      {:cors_plug, "~> 3.0"}
     ]
   end
 
