@@ -33,9 +33,6 @@ defmodule MercurioWeb.Endpoint do
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :mercurio
   end
 
-  plug Corsica,
-    origins: "*"
-
   plug Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
     cookie_key: "request_logger"
@@ -51,5 +48,8 @@ defmodule MercurioWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+
+  plug CORSPlug
+
   plug MercurioWeb.Router
 end
