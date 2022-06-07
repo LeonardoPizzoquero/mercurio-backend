@@ -26,7 +26,7 @@ defmodule MercurioWeb.RoomsController do
     with {:ok, %Room{} = room} <- Mercurio.get_room_by_id(id) do
       conn
       |> put_status(:ok)
-      |> render("room.json", room: room)
+      |> render("show.json", room: room)
     end
   end
 
@@ -34,7 +34,7 @@ defmodule MercurioWeb.RoomsController do
     with {:ok, %Room{} = room} <- Mercurio.update_room(params) do
       conn
       |> put_status(:ok)
-      |> render("room.json", room: room)
+      |> render("create.json", room: room)
     end
   end
 
