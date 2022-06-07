@@ -50,7 +50,7 @@ defmodule Mercurio.MixProject do
       {:ex_machina, "~> 2.7.0"},
       {:tesla, "~> 1.4"},
       {:guardian, "~> 2.2"},
-      {:cors_plug, "~> 3.0"}
+      {:corsica, "~> 1.0"}
     ]
   end
 

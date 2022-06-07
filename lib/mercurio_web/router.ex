@@ -4,9 +4,6 @@ defmodule MercurioWeb.Router do
   alias MercurioWeb.Plugs.UUIDChecker
 
   pipeline :api do
-    plug CORSPlug,
-      origin: ["http://localhost:3000"]
-
     plug :accepts, ["json"]
     plug UUIDChecker
   end
