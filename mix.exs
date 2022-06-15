@@ -50,7 +50,9 @@ defmodule Mercurio.MixProject do
       {:ex_machina, "~> 2.7.0"},
       {:tesla, "~> 1.4"},
       {:guardian, "~> 2.2"},
-      {:cors_plug, "~> 3.0"}
+      {:cors_plug, "~> 3.0"},
+      {:waffle, "~> 1.1.6"},
+      {:waffle_ecto, "~> 0.0.11"}
     ]
   end
 

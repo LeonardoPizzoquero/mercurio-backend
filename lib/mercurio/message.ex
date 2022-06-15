@@ -6,7 +6,9 @@ defmodule Mercurio.Message do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
 
-  @required_params [:content, :type]
+  @required_params [:content, :type, :user_id, :room_id]
+
+  @cast_params [:content, :type, :fixed, :active, :likes, :user_id, :room_id]
 
   @types [:text, :gif]
 
@@ -15,10 +17,11 @@ defmodule Mercurio.Message do
   schema "messages" do
     field :content, :string
     field :fixed, :boolean, default: false
+    field :likes, :integer, default: 0
     field :type, Ecto.Enum, values: @types
     field :active, :boolean, default: true
-    belongs_to :users, User, foreign_key: :user_id
-    belongs_to :rooms, Room, foreign_key: :room_id
+    belongs_to :user, User, foreign_key: :user_id
+    belongs_to :room, Room, foreign_key: :room_id
 
     timestamps()
   end
@@ -27,7 +30,7 @@ defmodule Mercurio.Message do
 
   def changeset(struct \\ %__MODULE__{}, params) do
     struct
-    |> cast(params, @required_params)
+    |> cast(params, @cast_params)
     |> validate_inclusion(:type, @types)
     |> validate_required(@required_params)
   end

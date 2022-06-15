@@ -10,7 +10,7 @@ defmodule Mercurio.Users.Update do
 
   defp do_update(user, params) do
     user
-    |> User.changeset(Map.put(params, "role", "user"))
+    |> User.changeset(params)
     |> Repo.update()
   end
 end

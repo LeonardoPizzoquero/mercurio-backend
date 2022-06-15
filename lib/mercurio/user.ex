@@ -1,9 +1,10 @@
 defmodule Mercurio.User do
   use Ecto.Schema
+  use Waffle.Ecto.Schema
   import Ecto.Changeset
 
   alias Ecto.Changeset
-  alias Mercurio.{Room, Message, Avatar}
+  alias Mercurio.{Room, Message}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -12,7 +13,7 @@ defmodule Mercurio.User do
 
   @roles [:admin, :user]
 
-  @derive {Jason.Encoder, only: [:id, :email, :name, :role]}
+  @derive {Jason.Encoder, only: [:id, :email, :name, :role, :avatar]}
 
   schema "users" do
     field :email, :string
@@ -21,10 +22,10 @@ defmodule Mercurio.User do
     field :password_hash, :string
     field :name, :string
     field :role, Ecto.Enum, values: @roles
+    field :avatar, Mercurio.FileImage.Type
 
     has_many :messages, Message
     has_many :rooms, Room
-    has_one :avatar, Avatar
 
     timestamps()
   end
@@ -35,6 +36,7 @@ defmodule Mercurio.User do
     struct
     |> cast(params, @required_params)
     |> validate_required(@required_params)
+    |> cast_attachments(params, [:avatar])
     |> validate_inclusion(:role, @roles)
     |> validate_length(:password, min: 6)
     |> validate_format(:email, ~r/@/)

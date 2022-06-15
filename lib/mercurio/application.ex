@@ -14,6 +14,7 @@ defmodule Mercurio.Application do
       MercurioWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Mercurio.PubSub},
+      MercurioWeb.Presence,
       # Start the Endpoint (http/https)
       MercurioWeb.Endpoint
       # Start a worker by calling: Mercurio.Worker.start_link(arg)

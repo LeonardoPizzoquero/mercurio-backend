@@ -6,10 +6,10 @@ defmodule MercurioWeb.UserSocket do
   channel "room:*", MercurioWeb.RoomChannel
 
   @impl true
-  def connect(%{"token" => token}, socket, _connect_info) do
+  def connect(%{"token" => token}, socket) do
     case Guardian.decode_and_verify(token) do
-      {:ok, _claims} ->
-        case Guardian.resource_from_claims(token) do
+      {:ok, claims} ->
+        case Guardian.resource_from_claims(claims) do
           {:ok, user} ->
             {:ok, assign(socket, :current_user, user)}
           {:error, _reason} ->

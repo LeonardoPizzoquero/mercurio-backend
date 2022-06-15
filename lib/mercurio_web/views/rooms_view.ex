@@ -7,8 +7,6 @@ defmodule MercurioWeb.RoomsView do
   def render("show.json", %{room: %Room{} = room}), do: room
 
   def render("index.json", %{rooms: rooms}) do
-    IO.inspect(%{rooms: Enum.map(rooms, &room_json/1)})
-
     %{rooms: Enum.map(rooms, &room_json/1)}
   end
 

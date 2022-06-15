@@ -4,8 +4,9 @@ defmodule Mercurio.Repo.Migrations.AddMessagesTable do
   def change do
     create table(:messages) do
       add :content, :string
-      add :fixed, :boolean
+      add :fixed, :boolean, default: false
       add :type, :string
+      add :active, :boolean, default: true
       add :likes, :integer, default: 0
       add :replied_message_id, references(:messages, type: :binary_id), allow_nil: true
       add :room_id, references(:rooms, type: :binary_id)

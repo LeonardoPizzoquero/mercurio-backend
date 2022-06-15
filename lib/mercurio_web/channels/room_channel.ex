@@ -3,10 +3,39 @@ defmodule MercurioWeb.RoomChannel do
   alias MercurioWeb.Presence
 
   @impl true
-  def join("room:" <> room_id,  %{"name" => name}, socket) do
-    send(self(), {:after_join, :name, name})
+  def join("room:" <> room_id, _payload, socket) do
+    send(self(), :after_join)
 
-    {:ok, room_id, socket}
+    case Mercurio.get_room_by_id(room_id) do
+      {:ok, room} ->
+      socket = assign(socket, :room, room)
+
+      response = %{room: room}
+
+      {:ok, response, socket}
+
+      {:error, _reason} -> {:error, %{reason: "Room not found"}}
+    end
+  end
+
+  @impl true
+  def handle_info(:after_join, socket) do
+    %{name: name, id: id} = socket.assigns.current_user
+    %{id: room_id} = socket.assigns.room
+
+    {:ok, _} = Presence.track(socket, id, %{
+      online_at: inspect(System.system_time(:second)),
+      name: name
+    })
+
+    push(socket, "presence_state", Presence.list(socket))
+
+    {:ok, messages} = Mercurio.get_room_messages(room_id)
+
+    messages
+    |> Enum.each(fn message -> push(socket, "message", message) end)
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -15,23 +44,29 @@ defmodule MercurioWeb.RoomChannel do
   end
 
   @impl true
-  def handle_in("message", %{"body" => body}, socket) do
-    broadcast!(socket, "message", %{body: body})
+  def handle_in("message", payload, socket) do
+    %{name: name, id: id, email: email, role: role} = socket.assigns.current_user
+    %{"content" => content, "type" => type} = payload
 
-    {:noreply, socket}
-  end
+    spawn(fn -> Mercurio.create_message(payload) end)
 
-  @impl true
-  def handle_info(:after_join, socket) do
-    %{name: name, id: id} = socket.assigns.current_user
+    message = %{
+      id: "",
+      content: content,
+      type: type,
+      active: true,
+      likes: 0,
+      user: %{
+        name: name,
+        id: id,
+        email: email,
+        role: role
+      },
+      fixed: false,
+      inserted_at: inspect(System.system_time(:second)),
+    }
 
-    {:ok, _} = Presence.track(socket, id, %{
-      online_at: inspect(System.system_time(:second)),
-      name: name,
-      id: id
-    })
-
-    push(socket, "presence_state", Presence.list(socket))
+    broadcast!(socket, "message", message)
 
     {:noreply, socket}
   end

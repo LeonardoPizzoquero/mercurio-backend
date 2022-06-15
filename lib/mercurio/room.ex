@@ -2,7 +2,7 @@ defmodule Mercurio.Room do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Mercurio.{User}
+  alias Mercurio.{User, Message}
 
   @required_params [:name, :user_id]
   @cast_params [:name, :status, :allow_gif, :show_emoji_button, :message_reactions, :show_users_online, :user_id]
@@ -20,6 +20,7 @@ defmodule Mercurio.Room do
     field :show_users_online, :boolean, default: true
 
     belongs_to :user, User, foreign_key: :user_id
+    has_many :messages, Message
 
     timestamps()
   end
