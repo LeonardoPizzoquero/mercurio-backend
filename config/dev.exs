@@ -11,7 +11,8 @@ config :mercurio, Mercurio.Repo,
   pool_size: 10
 
 config :waffle,
-  storage: Waffle.Storage.Local
+  storage: Waffle.Storage.Local,
+  asset_host: "http://localhost:4000"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

@@ -11,6 +11,10 @@ import Config
 # before starting your production server.
 config :mercurio, MercurioWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :waffle,
+  storage: Waffle.Storage.Local,
+  asset_host: "https://mercurio.gigalixirapp.com"
+
 # Do not print debug messages in production
 config :logger, level: :info
 
