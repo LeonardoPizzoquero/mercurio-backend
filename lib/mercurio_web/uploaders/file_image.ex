@@ -5,7 +5,7 @@ defmodule Mercurio.FileImage do
   # Include ecto support (requires package waffle_ecto installed):
   # use Waffle.Ecto.Definition
 
-  @versions [:original, :thumb]
+  @versions [:original]
 
   # Whitelist file extensions:
   def validate({file, _}) do
@@ -22,6 +22,6 @@ defmodule Mercurio.FileImage do
   end
 
   def storage_dir(_, {_file, user}) do
-    "uploads/avatars/#{user.id}"
+    "uploads/users/avatars/#{user.id}"
   end
 end

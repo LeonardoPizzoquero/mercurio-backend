@@ -36,12 +36,17 @@ defmodule Mercurio.User do
     struct
     |> cast(params, @required_params)
     |> validate_required(@required_params)
-    |> cast_attachments(params, [:avatar])
     |> validate_inclusion(:role, @roles)
     |> validate_length(:password, min: 6)
     |> validate_format(:email, ~r/@/)
     |> unique_constraint([:email])
     |> put_password_hash()
+  end
+
+  def avatar_changeset(user, attrs) do
+    user
+    |> cast_attachments(attrs, [:avatar])
+    |> validate_required([:avatar])
   end
 
   defp put_password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do

@@ -52,7 +52,8 @@ defmodule Mercurio.MixProject do
       {:guardian, "~> 2.2"},
       {:cors_plug, "~> 3.0"},
       {:waffle, "~> 1.1.6"},
-      {:waffle_ecto, "~> 0.0.11"}
+      {:waffle_ecto, "~> 0.0.11"},
+      {:uuid, "~> 1.1"}
     ]
   end
 
