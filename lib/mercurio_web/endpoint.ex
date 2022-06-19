@@ -28,7 +28,7 @@ defmodule MercurioWeb.Endpoint do
 
   plug Plug.Static,
     at: "/uploads/users/avatars",
-    from: Path.expand('./uploads/users/avatars'),
+    from: "./uploads/users/avatars",
     gzip: false
 
   # Code reloading can be explicitly enabled under the
