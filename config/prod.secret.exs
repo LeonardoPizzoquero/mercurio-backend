@@ -23,6 +23,10 @@ secret_key_base =
     You can generate one by calling: mix phx.gen.secret
     """
 
+config :waffle,
+  storage: Waffle.Storage.Local,
+  asset_host: "https://mercurio.gigalixirapp.com"
+
 config :mercurio, MercurioWeb.Endpoint,
   http: [
     port: String.to_integer(System.get_env("PORT") || "4000"),
