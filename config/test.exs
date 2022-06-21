@@ -17,6 +17,7 @@ config :mercurio, Mercurio.Repo,
 # you can enable the server option below.
 config :mercurio, MercurioWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
+  check_origin: false,
   secret_key_base: "N5BmyuFBIqjEyasf58eqLtp1PvZJqAqXxvElEEy55teYGK0EAZMGZw2HnW3pn+ny",
   server: false
 
