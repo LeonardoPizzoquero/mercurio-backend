@@ -63,7 +63,7 @@ defmodule MercurioWeb.RoomChannel do
         role: role
       },
       fixed: false,
-      inserted_at: inspect(System.system_time(:second)),
+      inserted_at: :os.system_time(:millisecond),
     }
 
     broadcast!(socket, "message", message)
